@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:${DB_NAME:testdb}
+    username: ${DB_CONNECTION_USERNAME:root}
+    password: ${DB_CONNECTION_PASSWORD:123456}
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    generate-ddl: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    defer-datasource-initialization: true
+  liquibase:
+    enabled: false

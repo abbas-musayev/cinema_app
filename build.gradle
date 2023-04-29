@@ -12,6 +12,11 @@ repositories {
 	mavenCentral()
 }
 
+bootRun {
+	systemProperties = System.properties
+	systemProperty 'spring.profiles.active', 'local,no-liquibase'
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

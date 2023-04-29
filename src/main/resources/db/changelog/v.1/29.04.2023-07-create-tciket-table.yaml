@@ -1,0 +1,57 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: your_name
+      changes:
+        - createTable:
+            tableName: ticket
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: ticket_number
+                  type: varchar(255)
+              - column:
+                  name: sector
+                  type: varchar(255)
+              - column:
+                  name: row
+                  type: varchar(255)
+              - column:
+                  name: place
+                  type: varchar(255)
+              - column:
+                  name: session_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: customer_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+            foreignKeys:
+              - foreignKey:
+                  constraintName: fk_ticket_session
+                  baseColumnNames:
+                    - session_id
+                  baseTableSchemaName: public
+                  baseTableName: session
+                  referencedColumnNames:
+                    - id
+                  referencedTableSchemaName: public
+                  referencedTableName: session
+              - foreignKey:
+                  constraintName: fk_ticket_customer
+                  baseColumnNames:
+                    - customer_id
+                  baseTableSchemaName: public
+                  baseTableName: customer
+                  referencedColumnNames:
+                    - id
+                  referencedTableSchemaName: public
+                  referencedTableName: customer

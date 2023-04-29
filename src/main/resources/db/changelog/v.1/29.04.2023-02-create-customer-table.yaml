@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: createCustomerTable
+      author: your_name
+      changes:
+        - createTable:
+            tableName: customer
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: surname
+                  type: VARCHAR(255)
+              - column:
+                  name: middle_name
+                  type: VARCHAR(255)
+              - column:
+                  name: birthday
+                  type: DATE
+              - column:
+                  name: fk_account
+                  type: BIGINT
+              - column:
+                  name: created_date
+                  type: TIMESTAMP
+                  defaultValueDate: 'CURRENT_TIMESTAMP'
+              - column:
+                  name: update_date
+                  type: TIMESTAMP
+                  defaultValueDate: 'CURRENT_TIMESTAMP'
+            constraints:
+              - foreignKey:
+                  constraintName: customer_account_fk
+                  baseColumnNames: fk_account
+                  baseTableName: customer
+                  referencedTableName: account
+                  referencedColumnNames: id

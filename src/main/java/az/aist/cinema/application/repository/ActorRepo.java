@@ -1,6 +1,6 @@
-package az.cinema.Cinema.application.repository;
+package az.aist.cinema.application.repository;
 
-import az.cinema.Cinema.application.entity.ActorEnt;
+import az.aist.cinema.application.entity.ActorEnt;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

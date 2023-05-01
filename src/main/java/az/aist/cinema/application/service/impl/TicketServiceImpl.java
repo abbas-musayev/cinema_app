@@ -1,6 +1,6 @@
-package az.cinema.Cinema.application.service.impl;
+package az.aist.cinema.application.service.impl;
 
-import az.cinema.Cinema.application.service.TicketService;
+import az.aist.cinema.application.service.TicketService;
 import org.springframework.stereotype.Service;
 
 @Service

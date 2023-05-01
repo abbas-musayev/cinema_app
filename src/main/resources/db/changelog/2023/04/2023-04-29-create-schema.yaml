@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_schema
+      author: abbas
+      changes:
+        - createSchema:
+            schemaName: cinema_app

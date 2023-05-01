@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1682862578137-14
+      author: User (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: fk_account
+            baseTableName: customer
+            constraintName: FK_CUSTOMER_ON_FK_ACCOUNT
+            referencedColumnNames: id
+            referencedTableName: account

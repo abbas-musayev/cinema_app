@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1682862578137-9
+      author: User (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            schemaName: cinema_app
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: movie_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: movie_cast_id
+                  type: BIGINT
+            tableName: movie_movie_cast

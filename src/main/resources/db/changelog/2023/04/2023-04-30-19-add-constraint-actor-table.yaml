@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1682862578137-18
+      author: User (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: actors_id
+            baseTableName: movie_cast_actors
+            constraintName: fk_movcasact_on_actor
+            referencedColumnNames: id
+            referencedTableName: actor

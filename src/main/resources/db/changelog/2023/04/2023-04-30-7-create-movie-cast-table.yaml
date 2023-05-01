@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1682862578137-6
+      author: User (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            schemaName: cinema_app
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_moviecast
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: create_date
+                  type: DATETIME
+              - column:
+                  name: update_date
+                  type: DATETIME
+              - column:
+                  name: status
+                  type: INT
+              - column:
+                  name: is_deleted
+                  type: BOOLEAN
+            tableName: movie_cast

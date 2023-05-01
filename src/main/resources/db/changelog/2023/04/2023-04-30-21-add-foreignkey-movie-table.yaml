@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1682862578137-20
+      author: User (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: movie_id
+            baseTableName: movie_genres
+            constraintName: fk_movie_genres_on_movie
+            referencedColumnNames: id
+            referencedTableName: movie

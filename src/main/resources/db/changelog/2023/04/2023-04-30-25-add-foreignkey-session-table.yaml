@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1682862578137-24
+      author: User (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: session_id
+            baseTableName: session_hall
+            constraintName: fk_seshal_on_session
+            referencedColumnNames: id
+            referencedTableName: session

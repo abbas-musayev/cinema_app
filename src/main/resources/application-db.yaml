@@ -1,14 +1,11 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:${DB_NAME:testdb}
-    username: ${DB_CONNECTION_USERNAME:root}
-    password: ${DB_CONNECTION_PASSWORD:123456}
-    driver-class-name: org.h2.Driver
-  h2:
-    console:
-      enabled: true
+    url: jdbc:postgresql://localhost:5432/${DB_NAME:cinema_app}
+    username: ${DB_CONNECTION_USERNAME:postgres}
+    password: ${DB_CONNECTION_PASSWORD:mysecretpassword}
+    driver-class-name: org.postgresql.Driver
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
     generate-ddl: true
     open-in-view: false
@@ -17,4 +14,8 @@ spring:
     defer-datasource-initialization: true
   liquibase:
     enabled: ${LIQUIBASE_ENABLED:true}
-    change-log: ${LIQUIBASE_CLASSPATH:classpath:db/changelog/db.changelog-${ACTIVE_PROFILE:master}.yaml}
+    change-log: ${LIQUIBASE_CLASSPATH:classpath:db/db.changelog-${ACTIVE_PROFILE:master}.yaml}
+    url: jdbc:postgresql://localhost:5432/${DB_NAME:cinema_app}
+    user: postgres
+    password: mysecretpassword
+    default-schema: cinema_app

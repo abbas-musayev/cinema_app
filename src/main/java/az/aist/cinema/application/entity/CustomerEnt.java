@@ -30,11 +30,14 @@ public class CustomerEnt extends CoreEnt {
     @Column(name = "middle_name")
     String middleName;
 
+    @Column(name = "email")
+    String email;
+
     @Column(name = "birthday")
     @DateTimeFormat(pattern = "yyyy.MM.dd")
     LocalDate localDate;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_account")
-    Account account;
+    AccountEnt accountEnt;
 }

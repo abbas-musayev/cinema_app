@@ -28,7 +28,7 @@ public class PaymentEnt {
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "account_uuid", referencedColumnName = "uuid")
-    Account account;
+    AccountEnt accountEnt;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "ticket_number", referencedColumnName = "ticker_number")

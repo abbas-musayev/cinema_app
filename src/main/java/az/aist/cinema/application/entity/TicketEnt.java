@@ -19,12 +19,16 @@ public class TicketEnt extends CoreEnt{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @Column(name = "ticket_number")
     String ticketNumber;
 
+    @Column(name = "")
     String sector;
 
-    String rows;
+    @Column(name = "line")
+    String line;
 
+    @Column(name = "place")
     String place;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

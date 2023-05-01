@@ -5,6 +5,8 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -14,7 +16,7 @@ import javax.persistence.*;
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "account")
-public class Account {
+public class AccountEnt {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,13 +25,22 @@ public class Account {
     @Column(name = "username")
     String username;
 
-    @Column(name = "nickname")
-    String nickname;
-
     @Column(name = "password")
     Byte[] password;
 
     @Column(name = "role")
     Role role;
+
+    @Column(name = "balance")
+    BigDecimal balance;
+
+    @Column(name = "uuid")
+    String uuid;
+
+    @PrePersist
+    private void prePersist(){
+        UUID uuid= UUID.randomUUID();
+        this.uuid = uuid.toString();
+    }
 
 }

@@ -1,9 +1,11 @@
 package az.aist.cinema.application.entity;
 
+import az.aist.cinema.application.enums.TicketStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -13,7 +15,7 @@ import javax.persistence.*;
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "ticket")
-public class TicketEnt extends CoreEnt{
+public class TicketEnt extends CoreEnt {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +24,7 @@ public class TicketEnt extends CoreEnt{
     @Column(name = "ticket_number")
     String ticketNumber;
 
-    @Column(name = "")
+    @Column(name = "sector")
     String sector;
 
     @Column(name = "line")
@@ -30,6 +32,13 @@ public class TicketEnt extends CoreEnt{
 
     @Column(name = "place")
     String place;
+
+    @Column(name = "amount")
+    BigDecimal amount;
+
+    @Column(name = "ticket_status")
+    @Enumerated(EnumType.ORDINAL)
+    TicketStatus ticketStatus;  // tarix meselesi sorusu, bron tarixi ucun tickerleri release ede bilsin
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "session_id")

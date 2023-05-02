@@ -8,11 +8,12 @@ import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
+@EnableSwagger2
 @Configuration
 public class SwaggerConfig {
     public static final String AUTHORIZATION_HEADER = "Authorization";
@@ -27,7 +28,7 @@ public class SwaggerConfig {
                 "Spring Boot Blog REST API Documentation",
                 "1",
                 "Terms of service",
-                new Contact("Anar Mammadov", "https://www.linkedin.com/in/anarmemmedov1501/", "mammadov_anar@outlook.com"),
+                new Contact("Abbas Musayev", "", ""),
                 "License of API",
                 "API license URL",
                 Collections.emptyList()
@@ -38,9 +39,10 @@ public class SwaggerConfig {
     public Docket api(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
-                .securityContexts(Collections.singletonList(securityContext()))
-                .securitySchemes(Collections.singletonList(apiKey()))
+//                .securityContexts(Collections.singletonList(securityContext()))
+//                .securitySchemes(Collections.singletonList(apiKey()))
                 .select()
+//                .apis(RequestHandlerSelectors.basePackage("az.aist.cinema.application"))
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build();

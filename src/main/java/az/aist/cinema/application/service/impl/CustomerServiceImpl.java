@@ -2,11 +2,10 @@ package az.aist.cinema.application.service.impl;
 
 import az.aist.cinema.application.dto.SearchCriteria;
 import az.aist.cinema.application.dto.SearchSpecification;
-import az.aist.cinema.application.dto.account.AccountRequestDto;
+import az.aist.cinema.application.dto.account.AccountRegisterRequestDto;
 import az.aist.cinema.application.dto.customer.CustomerRequestDto;
 import az.aist.cinema.application.dto.customer.CustomerResponseDto;
 import az.aist.cinema.application.entity.CustomerEnt;
-import az.aist.cinema.application.entity.MovieEnt;
 import az.aist.cinema.application.mapper.CustomerMapper;
 import az.aist.cinema.application.repository.CustomerRepo;
 import az.aist.cinema.application.service.AccountService;
@@ -29,7 +28,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void registerCustomer(CustomerRequestDto request) {
         CustomerEnt customerEnt = customerMapper.toEntity(request);
-        AccountRequestDto account = request.getAccount();
+        AccountRegisterRequestDto account = request.getAccount();
         accountService.createAccount(account);
         customerRepo.save(customerEnt);
     }

@@ -1,13 +1,11 @@
 package az.aist.cinema.application.dto.customer;
 
-import az.aist.cinema.application.dto.account.AccountRequestDto;
+import az.aist.cinema.application.dto.account.AccountRegisterRequestDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
 import java.time.LocalDate;
 
 @Getter
@@ -29,5 +27,5 @@ public class CustomerRequestDto {
     @JsonFormat(pattern = "MM/dd/yyyy")
     LocalDate localDate;
 
-    AccountRequestDto account;
+    AccountRegisterRequestDto account;
 }

@@ -31,8 +31,8 @@ public class AccountEnt {
     @Column(name = "role")
     Role role;
 
-    @Column(name = "balance")
-    BigDecimal balance;
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    BalanceEnt balance;
 
     @Column(name = "uuid")
     String uuid;

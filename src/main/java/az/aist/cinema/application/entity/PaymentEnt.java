@@ -1,5 +1,6 @@
 package az.aist.cinema.application.entity;
 
+import az.aist.cinema.application.enums.Valute;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -23,6 +24,9 @@ public class PaymentEnt {
     @Column(name = "amount")
     BigDecimal amount;
 
+    @Enumerated(EnumType.STRING)
+    Valute valute;
+
     @Column(name = "transaction_number")
     String transactionNumber;
 
@@ -31,6 +35,6 @@ public class PaymentEnt {
     AccountEnt accountEnt;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "ticket_number", referencedColumnName = "ticker_number")
+    @JoinColumn(name = "ticket_number", referencedColumnName = "ticket_number")
     TicketEnt ticket;
 }

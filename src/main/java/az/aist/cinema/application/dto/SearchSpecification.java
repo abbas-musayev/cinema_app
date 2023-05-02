@@ -1,18 +1,20 @@
 package az.aist.cinema.application.dto;
 
-import az.aist.cinema.application.entity.MovieEnt;
-import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import az.aist.cinema.application.dto.SearchCriteria;
 
-@AllArgsConstructor
 public class SearchSpecification<T> implements Specification<T> {
 
-    private SearchCriteria criteria;
+    private final SearchCriteria criteria;
+
+    public SearchSpecification(SearchCriteria criteria) {
+        this.criteria = criteria;
+    }
 
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {

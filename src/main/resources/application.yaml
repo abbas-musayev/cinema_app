@@ -1,5 +1,5 @@
 spring:
   profiles:
     include:
-      - server
+      - common
       - db

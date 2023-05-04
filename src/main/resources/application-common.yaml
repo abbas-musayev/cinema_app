@@ -4,6 +4,9 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+security:
+  secret:
+    key: VGhpcyBpcyBteSBzZWNyZXQga2V5IGJhc2U2NCBiYXNlNjQgYmFzZTY0IGJhc2U2NA==
 
 #logging:
 #  level:

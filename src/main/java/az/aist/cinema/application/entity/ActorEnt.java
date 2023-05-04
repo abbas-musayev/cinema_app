@@ -1,5 +1,6 @@
 package az.aist.cinema.application.entity;
 
+import az.aist.cinema.application.enums.ActorRole;
 import az.aist.cinema.application.enums.Gender;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -29,5 +30,9 @@ public class ActorEnt extends CoreEnt{
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     Gender gender;
+
+    @Column(name = "actor_role")
+    @Enumerated(EnumType.STRING)
+    ActorRole actorRole;
 
 }

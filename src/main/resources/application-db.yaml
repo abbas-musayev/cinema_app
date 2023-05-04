@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/${DB_NAME:cinema_app}
+    url: jdbc:postgresql://localhost:5432/${DB_NAME:cinema_app}?allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8
     username: ${DB_CONNECTION_USERNAME:postgres}
     password: ${DB_CONNECTION_PASSWORD:mysecretpassword}
     driver-class-name: org.postgresql.Driver

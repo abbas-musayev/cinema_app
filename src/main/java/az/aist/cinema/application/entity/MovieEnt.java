@@ -4,6 +4,8 @@ import az.aist.cinema.application.enums.Genres;
 import az.aist.cinema.application.enums.LanguageEnum;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,6 +18,8 @@ import java.util.List;
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "movie")
+@SQLDelete(sql = "update movie set is_deleted = true , is_active = false where id = ?")
+@Where(clause = "is_deleted = false")
 public class MovieEnt extends CoreEnt{
 
     @Id

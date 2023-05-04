@@ -6,9 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TicketRepository extends JpaRepository<TicketEnt,Long> {
     @Query("select t from TicketEnt t where t.ticketNumber in (?1)")
-    List<TicketEnt> findByTicketNumber(List<String> ticketNumber);
+    Optional<List<TicketEnt>> findByTicketNumber(List<String> ticketNumber);
 }

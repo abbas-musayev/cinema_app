@@ -4,6 +4,8 @@ import az.aist.cinema.application.enums.SeansTime;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -18,6 +20,8 @@ import java.util.Set;
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "session")
+@SQLDelete(sql = "update session set is_deleted = true , is_active = false where id = ?")
+@Where(clause = "is_deleted = false")
 public class SessionEnt extends CoreEnt {
 
     @Id

@@ -6,6 +6,7 @@ import az.aist.cinema.application.entity.SessionEnt;
 import org.mapstruct.Mapper;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface SessionMapper {
@@ -13,5 +14,5 @@ public interface SessionMapper {
     SessionResponseDto toDto(SessionEnt ent);
     SessionEnt toEntity(SessionRequestDto dto);
 
-    List<SessionResponseDto> toDtoList(List<SessionEnt> ents);
+    Set<SessionResponseDto> toDtoList(List<SessionEnt> ents);
 }

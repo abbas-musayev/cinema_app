@@ -2,6 +2,8 @@ package az.aist.cinema.application.entity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -13,6 +15,8 @@ import javax.persistence.*;
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "hall")
+@SQLDelete(sql = "update hall set is_deleted = true , is_active = false where id = ?")
+@Where(clause = "is_deleted = false")
 public class HallEnt extends CoreEnt{
 
     @Id

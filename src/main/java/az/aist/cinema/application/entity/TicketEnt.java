@@ -3,6 +3,8 @@ package az.aist.cinema.application.entity;
 import az.aist.cinema.application.enums.TicketStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -15,6 +17,8 @@ import java.math.BigDecimal;
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "ticket")
+@SQLDelete(sql = "update ticket set is_deleted = true , is_active = false where id = ?")
+@Where(clause = "is_deleted = false")
 public class TicketEnt extends CoreEnt {
 
     @Id

@@ -19,9 +19,10 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @PostMapping
-    public ResponseEntity<AccountPaymentResponseDto> increaseBalance(@RequestBody AccountPaymentRequestDto dto){
-        AccountPaymentResponseDto accountPaymentResponseDto = accountService.increaseAccountBalance(dto);
-        return ResponseEntity.ok(accountPaymentResponseDto);
-    }
+//    @PostMapping
+//    public ResponseEntity<AccountPaymentResponseDto> increaseBalance(@RequestBody AccountPaymentRequestDto dto){
+//        AccountPaymentResponseDto accountPaymentResponseDto = accountService.(dto);
+//        return ResponseEntity.ok(accountPaymentResponseDto);
+//    }
+
 }

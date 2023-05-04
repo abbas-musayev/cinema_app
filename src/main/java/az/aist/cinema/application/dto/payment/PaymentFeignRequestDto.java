@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PaymentRequestDto {
+public class PaymentFeignRequestDto {
     private String accountUuid;
     private Valute valute;
     private BigDecimal amount;

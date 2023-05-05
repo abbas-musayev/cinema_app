@@ -18,7 +18,8 @@ import java.time.Instant;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Authority implements GrantedAuthority {
+@Table(name = "authority")
+public class AuthorityEnt implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

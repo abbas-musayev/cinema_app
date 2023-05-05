@@ -2,7 +2,13 @@ package az.aist.cinema.application.controller;
 
 import az.aist.cinema.application.auth.JwtService;
 import az.aist.cinema.application.auth.UserPrincipal;
+import az.aist.cinema.application.dto.auth.JwtResponse;
 import az.aist.cinema.application.dto.auth.LoginRequest;
+import az.aist.cinema.application.dto.auth.RefreshTokenRequest;
+import az.aist.cinema.application.dto.auth.TokenRefreshResponse;
+import az.aist.cinema.application.entity.RefreshTokenEnt;
+import az.aist.cinema.application.exception.AuthRequestExcetion;
+import az.aist.cinema.application.service.RefreshTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +29,7 @@ import java.util.stream.Collectors;
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
+    private final RefreshTokenService refreshTokenService;
     private final JwtService jwtService;
 
     @PostMapping("/signin")
@@ -40,10 +47,29 @@ public class AuthController {
         List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
+        RefreshTokenEnt refreshToken = refreshTokenService.createRefreshToken(userDetails.getUsername());
 
-        return ResponseEntity.ok(new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(),
-                userDetails.getUsername(), userDetails.getEmail(), roles));
+        return ResponseEntity.ok(JwtResponse.builder()
+                .token(jwt)
+                .refreshToken(refreshToken.getToken())
+                .type("Bearer")
+                .roles(roles)
+                .build());
+    }
+
+    @PostMapping("/refreshtoken")
+    public ResponseEntity<?> refreshtoken(@RequestBody RefreshTokenRequest request) {
+        String requestRefreshToken = request.getRefreshToken();
+
+        return refreshTokenService.findByToken(requestRefreshToken)
+                .map(refreshTokenService::verifyExpiration)
+                .map(RefreshTokenEnt::getAccount)
+                .map(user -> {
+                    String token = jwtService.generateToken(new UserPrincipal(user));
+                    return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
+                })
+                .orElseThrow(() -> new AuthRequestExcetion(401,"TOKEN-NOT-FOUND",
+                        "Refresh token is not in database!"));
     }
 
 }

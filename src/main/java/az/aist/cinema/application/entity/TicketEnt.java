@@ -1,5 +1,6 @@
 package az.aist.cinema.application.entity;
 
+import az.aist.cinema.application.enums.Status;
 import az.aist.cinema.application.enums.TicketStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -52,4 +53,10 @@ public class TicketEnt extends CoreEnt {
     @JoinColumn(name = "customer_id")
     CustomerEnt customer;
 
+
+    @PrePersist
+    public void init(){
+        status= Status.ACTIVE;
+        isDeleted=false;
+    }
 }

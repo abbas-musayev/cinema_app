@@ -1,7 +1,5 @@
 package az.aist.cinema.application.service.impl;
 
-import az.aist.cinema.application.dto.account.AccountPaymentRequestDto;
-import az.aist.cinema.application.dto.account.AccountPaymentResponseDto;
 import az.aist.cinema.application.dto.balance.BalanceChangeRequestDto;
 import az.aist.cinema.application.dto.balance.BalanceResponseDto;
 import az.aist.cinema.application.dto.payment.PaymentAccountRequestDto;
@@ -9,6 +7,7 @@ import az.aist.cinema.application.dto.payment.PaymentFeignRequestDto;
 import az.aist.cinema.application.dto.payment.PaymentResponseDto;
 import az.aist.cinema.application.entity.AccountEnt;
 import az.aist.cinema.application.entity.BalanceEnt;
+import az.aist.cinema.application.entity.PaymentEnt;
 import az.aist.cinema.application.entity.TicketEnt;
 import az.aist.cinema.application.enums.Response;
 import az.aist.cinema.application.enums.TicketStatus;
@@ -19,9 +18,9 @@ import az.aist.cinema.application.repository.AccountRepository;
 import az.aist.cinema.application.repository.BalanceRepository;
 import az.aist.cinema.application.repository.PaymentRepository;
 import az.aist.cinema.application.repository.TicketRepository;
-import az.aist.cinema.application.service.AccountService;
 import az.aist.cinema.application.service.BalanceService;
 import az.aist.cinema.application.service.PaymentService;
+import az.aist.cinema.application.service.TicketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.OptimisticLock;
@@ -40,9 +39,9 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository paymentRepository;
     private final BalanceRepository balanceRepo;
     private final AccountRepository accountRepo;
-    private final AccountService accountService;
     private final BalanceService balanceService;
     private final TicketRepository ticketRepo;
+    private final TicketService ticketService;
 
     @Transactional
     @OptimisticLock(excluded = false)
@@ -61,7 +60,7 @@ public class PaymentServiceImpl implements PaymentService {
         // geriye succes qaytarilir
 
         // gelen account exists yoxlanilir
-        accountRepo.findByUuid(accountUuid)
+        AccountEnt account = accountRepo.findByUuid(accountUuid)
                 .orElseThrow(() -> new NotFoundCustomException(ErrorCodesEnum.ACCOUNT_NOT_FOUND, "Account not found"));
 
         List<TicketEnt> tickets = ticketRepo.findByTicketNumber(ticketNumbers)
@@ -115,6 +114,18 @@ public class PaymentServiceImpl implements PaymentService {
                 }
             }
 
+
+            for (TicketEnt ticketEnt : ticketEnts) {
+                PaymentEnt build = PaymentEnt.builder()
+                        .ticket(ticketEnt)
+                        .accountEnt(account)
+                        .transactionNumber(request.getTransactionNumber())
+                        .valute(request.getValute())
+                        .amount(request.getAmount())
+                        .build();
+                paymentRepository.save(build);
+            }
+
             return PaymentResponseDto.builder()
                     .responseCode("000")
                     .responseText("SUCCESS")
@@ -129,27 +140,23 @@ public class PaymentServiceImpl implements PaymentService {
         }
     }
 
+    @Transactional
     @Override
     public PaymentResponseDto ticketPaymentFromAccount(PaymentAccountRequestDto request) {
 
         String accountUuid = request.getAccounUuid();
         List<String> ticketNumbers = request.getTicketNumbers();
-        // gelen account exists yoxlanilir
 
-        // gelen account exists yoxlanilir
+        checkTransaction(request.getTransactionNumber());
+
         AccountEnt account = accountRepo.findByUuid(accountUuid)
                 .orElseThrow(() -> new NotFoundCustomException(ErrorCodesEnum.ACCOUNT_NOT_FOUND, "Account not found"));
-        // ticketler yoxlanilir
-
         List<TicketEnt> tickets = ticketRepo.findByTicketNumber(ticketNumbers)
                 .orElseThrow(() -> new NotFoundCustomException(ErrorCodesEnum.TICKET_NOT_FOUND, "Ticket not found"));
-
         BalanceEnt balance = balanceRepo.findByAccountUuid(account.getUuid())
-                .orElseThrow(() -> new NotFoundCustomException(ErrorCodesEnum.ACCOUNT_NOT_FOUND, "account not found"));
+                .orElseThrow(() -> new NotFoundCustomException(ErrorCodesEnum.BALANCE_NOT_FOUND, "balance not found"));
 
-        BigDecimal sumOfTicketAmount = tickets.stream()
-                .map(TicketEnt::getAmount)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal sumOfTicketAmount = sumOfTicketAmount(tickets);
 
         // account balansi ticketlerin mebleginnen az olub olmamasi yoxlanilir
         if (balance.getBalance().compareTo(sumOfTicketAmount) < 0) {
@@ -171,5 +178,58 @@ public class PaymentServiceImpl implements PaymentService {
                 .responseText(response.getResponseText())
                 .transactionNumber(request.getTransactionNumber())
                 .build();
+    }
+
+    @Transactional
+    @Override
+    public PaymentResponseDto refundTicketPayment(PaymentAccountRequestDto request) {
+
+        String accountUuid = request.getAccounUuid();
+        List<String> ticketNumbers = request.getTicketNumbers();
+
+        AccountEnt account = accountRepo.findByUuid(accountUuid)
+                .orElseThrow(() -> new NotFoundCustomException(ErrorCodesEnum.ACCOUNT_NOT_FOUND, "Account not found"));
+        List<TicketEnt> tickets = ticketRepo.findByTicketNumber(ticketNumbers)
+                .orElseThrow(() -> new NotFoundCustomException(ErrorCodesEnum.TICKET_NOT_FOUND, "Ticket not found"));
+        BalanceEnt balance = balanceRepo.findByAccountUuid(account.getUuid())
+                .orElseThrow(() -> new NotFoundCustomException(ErrorCodesEnum.BALANCE_NOT_FOUND, "balance not found"));
+
+        for (TicketEnt ticket : tickets) {
+            if (ticketService.ticketCheckTicketDateIsExpired(ticket.getTicketNumber())) {
+                return PaymentResponseDto.builder()
+                        .responseCode("400")
+                        .responseText("Ticket expired")
+                        .transactionNumber(request.getTransactionNumber())
+                        .build();
+            }
+        }
+
+        BigDecimal sumOfTicketAmount = sumOfTicketAmount(tickets);
+
+        BalanceChangeRequestDto dto = BalanceChangeRequestDto.builder()
+                .accountUuid(accountUuid)
+                .amount(sumOfTicketAmount)
+                .transactionNumber(request.getTransactionNumber())
+                .build();
+
+        BalanceResponseDto response = balanceService.increaseBalance(dto);
+
+        return PaymentResponseDto.builder()
+                .responseCode(response.getResponseCode())
+                .responseText(response.getResponseText())
+                .transactionNumber(request.getTransactionNumber())
+                .build();
+    }
+
+
+    private void checkTransaction(String transactionNumber) {
+        paymentRepository.getByTransactionNumber(transactionNumber)
+                .orElseThrow(() -> new CustomThrowException(400, ErrorCodesEnum.DUBLICATE_TRANSACTION, "dublicate transaction"));
+    }
+
+    private BigDecimal sumOfTicketAmount(List<TicketEnt> tickets) {
+        return tickets.stream()
+                .map(TicketEnt::getAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

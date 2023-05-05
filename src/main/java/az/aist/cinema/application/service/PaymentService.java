@@ -9,4 +9,6 @@ public interface PaymentService {
     PaymentResponseDto paymentForTicket(PaymentFeignRequestDto dto);
 
     PaymentResponseDto ticketPaymentFromAccount(PaymentAccountRequestDto dto);
+
+    PaymentResponseDto refundTicketPayment(PaymentAccountRequestDto dto);
 }

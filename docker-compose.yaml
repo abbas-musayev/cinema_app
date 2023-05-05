@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  my-postgres-db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - my-db-data:/var/lib/postgresql/data
+
+  cinema-app:
+    image: cinema-app:latest
+    environment:
+      DB_NAME: cineme_app
+      DB_CONNECTION_USERNAME: postgres
+      DB_CONNECTION_PASSWORD: mysecretpassword
+    ports:
+      - "8080:8080"
+    depends_on:
+      - my-postgres-db
+
+volumes:
+  my-db-data:

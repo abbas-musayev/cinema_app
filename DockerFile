@@ -1,0 +1,7 @@
+FROM openjdk:11-jre-slim
+LABEL maintainer="Abbas"
+EXPOSE 8080
+COPY build/libs/Cinema-application-0.0.1-SNAPSHOT.jar /app/
+WORKDIR /app/
+ENTRYPOINT ["java"]
+CMD ["-jar", "/app/Cinema-application-0.0.1-SNAPSHOT.jar"]

@@ -33,12 +33,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(SWAGGER_UI).permitAll();
         http.authorizeRequests().antMatchers(SWAGGER_HTML).permitAll();
         http.authorizeRequests()
-                .antMatchers(POST, "/v1/currency").hasAuthority("ADMIN")
-                .antMatchers(DELETE, "/v1/currency").hasAuthority("ADMIN")
-                .antMatchers(GET, "/v1/currency/by-date").hasAuthority("USER")
-                .antMatchers(GET, "/v1/currency/by-date-and-valute").hasAuthority("USER")
-                .antMatchers(POST,"/v1/register").permitAll()
-                .antMatchers(GET,"/v1/login").permitAll();
+                .antMatchers("/v1/customer/**").hasAnyAuthority("ADMIN", "USER", "MODERATOR")
+                .antMatchers(GET, "/v1/movie/**").hasAuthority("USER")
+                .antMatchers(POST, "/v1/movie").hasAnyAuthority("ADMIN", "MODERATOR")
+                .antMatchers(DELETE, "/v1/movie").hasAnyAuthority("ADMIN", "MODERATOR")
+                .antMatchers(PUT, "/v1/movie").hasAnyAuthority("ADMIN", "MODERATOR")
+                .antMatchers(POST, "/v1/customer").permitAll()
+                .antMatchers(GET, "/v1/customers/**").hasAnyAuthority("ADMIN", "MODERATOR")
+                .antMatchers(GET, "/v1/customers/search").hasAnyAuthority("ADMIN", "MODERATOR","USER")
+                .antMatchers(POST, "/v1/register").permitAll()
+                .antMatchers(GET, "/auth/**").permitAll();
         http.logout().disable();
         http.formLogin().disable();
         http.apply(jwtAuthSecurityConfigurerAdapter);

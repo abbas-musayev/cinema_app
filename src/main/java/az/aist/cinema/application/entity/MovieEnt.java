@@ -2,6 +2,7 @@ package az.aist.cinema.application.entity;
 
 import az.aist.cinema.application.enums.Genres;
 import az.aist.cinema.application.enums.LanguageEnum;
+import az.aist.cinema.application.enums.Status;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.SQLDelete;
@@ -53,4 +54,9 @@ public class MovieEnt extends CoreEnt{
             joinColumns = @JoinColumn(name = "movie_id"))
     List<Genres> genres;
 
+    @PrePersist
+    public void init(){
+        status= Status.ACTIVE;
+        isDeleted=false;
+    }
 }

@@ -1,7 +1,7 @@
 package az.aist.cinema.application.auth;
 
 import az.aist.cinema.application.entity.AccountEnt;
-import az.aist.cinema.application.entity.Authority;
+import az.aist.cinema.application.entity.AuthorityEnt;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -54,7 +54,7 @@ public class UserPrincipal implements UserDetails {
         return true;
     }
 
-    private Set<GrantedAuthority> mapToGrantedAuthority(Set<Authority> roles) {
+    private Set<GrantedAuthority> mapToGrantedAuthority(Set<AuthorityEnt> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getRole().name())).collect(Collectors.toSet());
     }
 }

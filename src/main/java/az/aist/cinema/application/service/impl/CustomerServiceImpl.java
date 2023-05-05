@@ -7,7 +7,7 @@ import az.aist.cinema.application.dto.customer.CustomerRequestDto;
 import az.aist.cinema.application.dto.customer.CustomerResponseDto;
 import az.aist.cinema.application.entity.CustomerEnt;
 import az.aist.cinema.application.mapper.CustomerMapper;
-import az.aist.cinema.application.repository.CustomerRepo;
+import az.aist.cinema.application.repository.CustomerRepository;
 import az.aist.cinema.application.service.AccountService;
 import az.aist.cinema.application.service.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
-    private final CustomerRepo customerRepo;
+    private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
     private final AccountService accountService;
 
@@ -30,12 +30,12 @@ public class CustomerServiceImpl implements CustomerService {
         CustomerEnt customerEnt = customerMapper.toEntity(request);
         AccountRegisterRequestDto account = request.getAccount();
         accountService.createAccount(account);
-        customerRepo.save(customerEnt);
+        customerRepository.save(customerEnt);
     }
 
     @Override
     public List<CustomerResponseDto> getAllCustomers() {
-        return customerMapper.toDtoList(customerRepo.findAll());
+        return customerMapper.toDtoList(customerRepository.findAll());
     }
 
     @Override
@@ -46,7 +46,7 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         Specification<CustomerEnt> spec = specs.stream().reduce(Specification::and).orElse(null);
-        List<CustomerEnt> all = customerRepo.findAll(spec);
+        List<CustomerEnt> all = customerRepository.findAll(spec);
         return customerMapper.toDtoList(all);
     }
 }

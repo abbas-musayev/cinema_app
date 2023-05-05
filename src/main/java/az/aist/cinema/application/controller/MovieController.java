@@ -27,12 +27,12 @@ public class MovieController {
     }
 
     @GetMapping
-    public ResponseEntity<Set<MovieResponseDto>> getAllMovies(){
+    public ResponseEntity<List<MovieResponseDto>> getAllMovies(){
         return ResponseEntity.ok(movieService.getAll());
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Set<MovieResponseDto>> searchMovie(@RequestBody List<SearchCriteria> searchCriteria){
+    public ResponseEntity<List<MovieResponseDto>> searchMovie(@RequestBody List<SearchCriteria> searchCriteria){
         return ResponseEntity.ok(movieService.search(searchCriteria));
     }
 

@@ -28,12 +28,12 @@ public class HallServiceImpl implements HallService {
     }
 
     @Override
-    public Set<HallResponseDto> getAll() {
+    public List<HallResponseDto> getAll() {
         return null;
     }
 
     @Override
-    public Set<HallResponseDto> search(List<SearchCriteria> request) {
+    public List<HallResponseDto> search(List<SearchCriteria> request) {
         return null;
     }
 }

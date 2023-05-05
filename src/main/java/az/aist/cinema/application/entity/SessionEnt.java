@@ -1,6 +1,7 @@
 package az.aist.cinema.application.entity;
 
 import az.aist.cinema.application.enums.SeansTime;
+import az.aist.cinema.application.enums.Status;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.Hibernate;
@@ -57,6 +58,12 @@ public class SessionEnt extends CoreEnt {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     Set<HallEnt> hall;
 
+
+    @PrePersist
+    public void init(){
+        status= Status.ACTIVE;
+        isDeleted=false;
+    }
 
     @Override
     public boolean equals(Object o) {

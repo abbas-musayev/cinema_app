@@ -11,6 +11,7 @@ import az.aist.cinema.application.repository.BalanceRepository;
 import az.aist.cinema.application.service.BalanceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -20,6 +21,7 @@ public class BalanceServiceImpl implements BalanceService {
 
     private final BalanceRepository balanceRepository;
 
+    @Transactional
     @Override
     public BalanceResponseDto increaseBalance(BalanceChangeRequestDto request) {
         BalanceEnt balance = balanceRepository.findByAccountUuid(request.getAccountUuid())
@@ -32,6 +34,7 @@ public class BalanceServiceImpl implements BalanceService {
                 .build();
     }
 
+    @Transactional
     @Override
     public BalanceResponseDto reduceBalance(BalanceChangeRequestDto request) {
         BalanceEnt balance = balanceRepository.findByAccountUuid(request.getAccountUuid())

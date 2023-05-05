@@ -1,5 +1,6 @@
 package az.aist.cinema.application.entity;
 
+import az.aist.cinema.application.enums.Status;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -40,4 +41,10 @@ public class CustomerEnt extends CoreEnt {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_account")
     AccountEnt accountEnt;
+
+    @PrePersist
+    public void init(){
+        status= Status.ACTIVE;
+        isDeleted=false;
+    }
 }

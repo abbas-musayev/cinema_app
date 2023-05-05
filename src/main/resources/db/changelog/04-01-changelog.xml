@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLoc-ation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <property name="byte[].type" value="bytea" dbms="postgresql"/>
+    <property name="byte[].type" value="BLOB" dbms="h2"/>
+    <changeSet id="1683229909317-1" author="User (generated)">
+        <createTable tableName="account">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_account"/>
+            </column>
+            <column name="username" type="VARCHAR(255)"/>
+            <column name="password" type="${byte[].type}"/>
+            <column name="balance_id" type="BIGINT"/>
+            <column name="uuid" type="VARCHAR(255)"/>
+            <column name="local_date_time" type="DATETIME"/>
+            <column name="is_active" type="BOOLEAN"/>
+            <column name="is_deleted" type="BOOLEAN"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1683229909317-2" author="User (generated)">
+        <createTable tableName="account_authorities">
+            <column name="account_ent_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_account_authorities"/>
+            </column>
+            <column name="authorities_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_account_authorities"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1683229909317-3" author="User (generated)">
+        <createTable tableName="actor">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_actor"/>
+            </column>
+            <column name="created_date" type="DATETIME"/>
+            <column name="update_date" type="DATETIME"/>
+            <column name="status" type="INT"/>
+            <column name="is_deleted" type="BOOLEAN"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="surname" type="VARCHAR(255)"/>
+            <column name="gender" type="VARCHAR(255)"/>
+            <column name="actor_role" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1683229909317-4" author="User (generated)">
+        <createTable tableName="authority">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_authority"/>
+            </column>
+            <column name="role" type="VARCHAR(255)"/>
+            <column name="is_deleted" type="BOOLEAN"/>
+            <column name="is_active" type="BOOLEAN"/>
+            <column name="created_date" type="DATETIME"/>
+            <column name="last_modified_date" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1683229909317-5" author="User (generated)">
+        <createTable tableName="balance">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_balance"/>
+            </column>
+            <column name="balance" type="DECIMAL"/>
+            <column name="valute" type="VARCHAR(255)"/>
+            <column name="account_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1683229909317-6" author="User (generated)">
+        <createTable tableName="customer">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_customer"/>
+            </column>
+            <column name="created_date" type="DATETIME"/>
+            <column name="update_date" type="DATETIME"/>
+            <column name="status" type="INT"/>
+            <column name="is_deleted" type="BOOLEAN"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="surname" type="VARCHAR(255)"/>
+            <column name="middle_name" type="VARCHAR(255)"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="birthday" type="DATE"/>
+            <column name="fk_account" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1683229909317-7" author="User (generated)">
+        <createTable tableName="hall">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_hall"/>
+            </column>
+            <column name="created_date" type="DATETIME"/>
+            <column name="update_date" type="DATETIME"/>
+            <column name="status" type="INT"/>
+            <column name="is_deleted" type="BOOLEAN"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="seat_count" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1683229909317-8" author="User (generated)">
+        <createTable tableName="movie">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_movie"/>
+            </column>
+            <column name="created_date" type="DATETIME"/>
+            <column name="update_date" type="DATETIME"/>
+            <column name="status" type="INT"/>
+            <column name="is_deleted" type="BOOLEAN"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="title" type="VARCHAR(255)"/>
+            <column name="overview" type="VARCHAR(255)"/>
+            <column name="rating" type="VARCHAR(255)"/>
+            <column name="language" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1683229909317-9" author="User (generated)">
+        <createTable tableName="movie_cast">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_movie_cast"/>
+            </column>
+            <column name="created_date" type="DATETIME"/>
+            <column name="update_date" type="DATETIME"/>
+            <column name="status" type="INT"/>
+            <column name="is_deleted" type="BOOLEAN"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1683229909317-10" author="User (generated)">
+        <createTable tableName="movie_cast_actor_ents">
+            <column name="movie_cast_ent_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="actor_ents_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1683229909317-11" author="User (generated)">
+        <createTable tableName="movie_genres">
+            <column name="movie_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="genres" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1683229909317-12" author="User (generated)">
+        <createTable tableName="movie_movie_cast">
+            <column name="movie_ent_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="movie_cast_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1683229909317-13" author="User (generated)">
+        <createTable tableName="payment">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_payment"/>
+            </column>
+            <column name="amount" type="DECIMAL"/>
+            <column name="valute" type="VARCHAR(255)"/>
+            <column name="transaction_number" type="VARCHAR(255)"/>
+            <column name="account_uuid" type="BIGINT"/>
+            <column name="ticket_number" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1683229909317-14" author="User (generated)">
+        <createTable tableName="session">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_session"/>
+            </column>
+            <column name="created_date" type="DATETIME"/>
+            <column name="update_date" type="DATETIME"/>
+            <column name="status" type="INT"/>
+            <column name="is_deleted" type="BOOLEAN"/>
+            <column name="session_name" type="VARCHAR(255)"/>
+            <column name="start_date" type="DATE"/>
+            <column name="start_hour" type="VARCHAR(255)"/>
+            <column name="end_date" type="DATE"/>
+            <column name="end_hour" type="VARCHAR(255)"/>
+            <column name="price" type="VARCHAR(255)"/>
+            <column name="seans_time" type="VARCHAR(255)"/>
+            <column name="fk_movie" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1683229909317-15" author="User (generated)">
+        <createTable tableName="session_hall">
+            <column name="session_ent_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_session_hall"/>
+            </column>
+            <column name="hall_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_session_hall"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1683229909317-16" author="User (generated)">
+        <createTable tableName="ticket">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_ticket"/>
+            </column>
+            <column name="created_date" type="DATETIME"/>
+            <column name="update_date" type="DATETIME"/>
+            <column name="status" type="INT"/>
+            <column name="is_deleted" type="BOOLEAN"/>
+            <column name="ticket_number" type="VARCHAR(255)"/>
+            <column name="sector" type="VARCHAR(255)"/>
+            <column name="line" type="VARCHAR(255)"/>
+            <column name="place" type="VARCHAR(255)"/>
+            <column name="amount" type="DECIMAL"/>
+            <column name="ticket_status" type="INT"/>
+            <column name="session_id" type="BIGINT"/>
+            <column name="customer_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1683229909317-17" author="User (generated)">
+        <addUniqueConstraint columnNames="hall_id" constraintName="uc_session_hall_hall" tableName="session_hall"/>
+    </changeSet>
+    <changeSet id="1683229909317-18" author="User (generated)">
+        <addForeignKeyConstraint baseColumnNames="balance_id" baseTableName="account"
+                                 constraintName="FK_ACCOUNT_ON_BALANCE" referencedColumnNames="id"
+                                 referencedTableName="balance"/>
+    </changeSet>
+    <changeSet id="1683229909317-19" author="User (generated)">
+        <addForeignKeyConstraint baseColumnNames="account_id" baseTableName="balance"
+                                 constraintName="FK_BALANCE_ON_ACCOUNT" referencedColumnNames="id"
+                                 referencedTableName="account"/>
+    </changeSet>
+    <changeSet id="1683229909317-20" author="User (generated)">
+        <addForeignKeyConstraint baseColumnNames="fk_account" baseTableName="customer"
+                                 constraintName="FK_CUSTOMER_ON_FK_ACCOUNT" referencedColumnNames="id"
+                                 referencedTableName="account"/>
+    </changeSet>
+    <changeSet id="1683229909317-21" author="User (generated)">
+        <addForeignKeyConstraint baseColumnNames="account_uuid" baseTableName="payment"
+                                 constraintName="FK_PAYMENT_ON_ACCOUNT_UUID" referencedColumnNames="uuid"
+                                 referencedTableName="account"/>
+    </changeSet>
+    <changeSet id="1683229909317-22" author="User (generated)">
+        <addForeignKeyConstraint baseColumnNames="ticket_number" baseTableName="payment"
+                                 constraintName="FK_PAYMENT_ON_TICKET_NUMBER" referencedColumnNames="ticket_number"
+                                 referencedTableName="ticket"/>
+    </changeSet>
+    <changeSet id="1683229909317-23" author="User (generated)">
+        <addForeignKeyConstraint baseColumnNames="fk_movie" baseTableName="session"
+                                 constraintName="FK_SESSION_ON_FK_MOVIE" referencedColumnNames="id"
+                                 referencedTableName="movie"/>
+    </changeSet>
+    <changeSet id="1683229909317-24" author="User (generated)">
+        <addForeignKeyConstraint baseColumnNames="customer_id" baseTableName="ticket"
+                                 constraintName="FK_TICKET_ON_CUSTOMER" referencedColumnNames="id"
+                                 referencedTableName="customer"/>
+    </changeSet>
+    <changeSet id="1683229909317-25" author="User (generated)">
+        <addForeignKeyConstraint baseColumnNames="session_id" baseTableName="ticket"
+                                 constraintName="FK_TICKET_ON_SESSION" referencedColumnNames="id"
+                                 referencedTableName="session"/>
+    </changeSet>
+    <changeSet id="1683229909317-26" author="User (generated)">
+        <addForeignKeyConstraint baseColumnNames="account_ent_id" baseTableName="account_authorities"
+                                 constraintName="fk_accaut_on_account_ent" referencedColumnNames="id"
+                                 referencedTableName="account"/>
+    </changeSet>
+    <changeSet id="1683229909317-27" author="User (generated)">
+        <addForeignKeyConstraint baseColumnNames="authorities_id" baseTableName="account_authorities"
+                                 constraintName="fk_accaut_on_authority" referencedColumnNames="id"
+                                 referencedTableName="authority"/>
+    </changeSet>
+    <changeSet id="1683229909317-28" author="User (generated)">
+        <addForeignKeyConstraint baseColumnNames="actor_ents_id" baseTableName="movie_cast_actor_ents"
+                                 constraintName="fk_movcasactent_on_actor_ent" referencedColumnNames="id"
+                                 referencedTableName="actor"/>
+    </changeSet>
+    <changeSet id="1683229909317-29" author="User (generated)">
+        <addForeignKeyConstraint baseColumnNames="movie_cast_ent_id" baseTableName="movie_cast_actor_ents"
+                                 constraintName="fk_movcasactent_on_movie_cast_ent" referencedColumnNames="id"
+                                 referencedTableName="movie_cast"/>
+    </changeSet>
+    <changeSet id="1683229909317-30" author="User (generated)">
+        <addForeignKeyConstraint baseColumnNames="movie_id" baseTableName="movie_genres"
+                                 constraintName="fk_movie_genres_on_movie_ent" referencedColumnNames="id"
+                                 referencedTableName="movie"/>
+    </changeSet>
+    <changeSet id="1683229909317-31" author="User (generated)">
+        <addForeignKeyConstraint baseColumnNames="movie_cast_id" baseTableName="movie_movie_cast"
+                                 constraintName="fk_movmovcas_on_movie_cast_ent" referencedColumnNames="id"
+                                 referencedTableName="movie_cast"/>
+    </changeSet>
+    <changeSet id="1683229909317-32" author="User (generated)">
+        <addForeignKeyConstraint baseColumnNames="movie_ent_id" baseTableName="movie_movie_cast"
+                                 constraintName="fk_movmovcas_on_movie_ent" referencedColumnNames="id"
+                                 referencedTableName="movie"/>
+    </changeSet>
+    <changeSet id="1683229909317-33" author="User (generated)">
+        <addForeignKeyConstraint baseColumnNames="hall_id" baseTableName="session_hall"
+                                 constraintName="fk_seshal_on_hall_ent" referencedColumnNames="id"
+                                 referencedTableName="hall"/>
+    </changeSet>
+    <changeSet id="1683229909317-34" author="User (generated)">
+        <addForeignKeyConstraint baseColumnNames="session_ent_id" baseTableName="session_hall"
+                                 constraintName="fk_seshal_on_session_ent" referencedColumnNames="id"
+                                 referencedTableName="session"/>
+    </changeSet>
+
+</databaseChangeLog>

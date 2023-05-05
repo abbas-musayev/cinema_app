@@ -15,16 +15,16 @@ public class CoreEnt {
 
     @Column(name = "created_date")
     @CreationTimestamp
-    private LocalDateTime createDate;
+    protected LocalDateTime createDate;
 
     @Column(name = "update_date")
     @CreationTimestamp
-    private LocalDateTime updateDate;
+    protected LocalDateTime updateDate;
 
     @Column(name = "status")
     @Enumerated(EnumType.ORDINAL)
-    private Status status;
+    protected Status status;
 
     @Column(name = "is_deleted")
-    private Boolean isDeleted;
+    protected Boolean isDeleted;
 }

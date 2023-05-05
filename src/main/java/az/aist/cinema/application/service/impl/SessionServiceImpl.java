@@ -6,7 +6,7 @@ import az.aist.cinema.application.dto.session.SessionRequestDto;
 import az.aist.cinema.application.dto.session.SessionResponseDto;
 import az.aist.cinema.application.entity.SessionEnt;
 import az.aist.cinema.application.mapper.SessionMapper;
-import az.aist.cinema.application.repository.SessionRepo;
+import az.aist.cinema.application.repository.SessionRepository;
 import az.aist.cinema.application.service.SessionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,12 +19,12 @@ import java.util.Set;
 public class SessionServiceImpl implements SessionService {
 
     private final SessionMapper sessionMapper;
-    private final SessionRepo sessionRepo;
+    private final SessionRepository sessionRepository;
 
     @Override
     public void create(SessionRequestDto dto) {
         SessionEnt sessionEnt = sessionMapper.toEntity(dto);
-        sessionRepo.save(sessionEnt);
+        sessionRepository.save(sessionEnt);
     }
 
     @Override
@@ -38,12 +38,12 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public Set<SessionResponseDto> getAll() {
-        return sessionMapper.toDtoList(sessionRepo.findAll());
+    public List<SessionResponseDto> getAll() {
+        return sessionMapper.toDtoList(sessionRepository.findAll());
     }
 
     @Override
-    public Set<SessionResponseDto> search(List<SearchCriteria> request) {
+    public List<SessionResponseDto> search(List<SearchCriteria> request) {
         return null;
     }
 }

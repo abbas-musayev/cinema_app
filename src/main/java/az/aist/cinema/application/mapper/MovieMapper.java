@@ -15,7 +15,7 @@ public interface MovieMapper {
 
     MovieEnt toEntity(MovieRequestDto dto);
 
-    Set<MovieResponseDto> toListDto(List<MovieEnt> ents);
+    List<MovieResponseDto> toListDto(List<MovieEnt> ents);
 
     @Named("partialUpdate")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

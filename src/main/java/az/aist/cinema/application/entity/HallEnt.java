@@ -1,5 +1,6 @@
 package az.aist.cinema.application.entity;
 
+import az.aist.cinema.application.enums.Status;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.SQLDelete;
@@ -28,4 +29,10 @@ public class HallEnt extends CoreEnt{
 
     @Column(name = "seat_count")
     Integer seatCount;
+
+    @PrePersist
+    public void init(){
+        status= Status.ACTIVE;
+        isDeleted=false;
+    }
 }

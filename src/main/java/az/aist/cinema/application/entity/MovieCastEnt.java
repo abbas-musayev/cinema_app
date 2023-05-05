@@ -1,5 +1,6 @@
 package az.aist.cinema.application.entity;
 
+import az.aist.cinema.application.enums.Status;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.SQLDelete;
@@ -27,4 +28,10 @@ public class MovieCastEnt extends CoreEnt {
     @Column(name = "fk_actor")
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     List<ActorEnt> actorEnts;
+
+    @PrePersist
+    public void init(){
+        status= Status.ACTIVE;
+        isDeleted=false;
+    }
 }

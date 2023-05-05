@@ -14,5 +14,5 @@ public interface SessionMapper {
     SessionResponseDto toDto(SessionEnt ent);
     SessionEnt toEntity(SessionRequestDto dto);
 
-    Set<SessionResponseDto> toDtoList(List<SessionEnt> ents);
+    List<SessionResponseDto> toDtoList(List<SessionEnt> ents);
 }

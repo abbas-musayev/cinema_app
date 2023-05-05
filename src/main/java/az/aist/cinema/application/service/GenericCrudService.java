@@ -10,6 +10,6 @@ public interface GenericCrudService<R,E,T> {
     void create(R request);
     void delete(Long id);
     MovieResponseDto edit(R request, Long id);
-    Set<T> getAll();
-    Set<T> search(List<SearchCriteria> request);
+    List<T> getAll();
+    List<T> search(List<SearchCriteria> request);
 }

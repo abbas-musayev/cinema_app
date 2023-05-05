@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SessionRepo extends JpaRepository<SessionEnt,Long> {
+public interface SessionRepository extends JpaRepository<SessionEnt,Long> {
 
     List<SessionEnt> findByMovieId(String movieId);
 }

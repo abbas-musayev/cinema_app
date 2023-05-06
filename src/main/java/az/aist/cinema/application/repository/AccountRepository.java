@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface AccountRepository extends JpaRepository<AccountEnt,Long> {
-    @Query("select acc from AccountEnt acc where acc.uuid= ?1 and acc.isDeleted=false and acc.isActive=true")
+    @Query("select acc from AccountEnt acc where acc.uuid= ?1 and acc.isDeleted=false and acc.status=1")
     Optional<AccountEnt> findByUuid(String accountUuid);
 
     Optional<AccountEnt> findByUsername(String username);

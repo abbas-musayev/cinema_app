@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface BalanceRepository extends JpaRepository<BalanceEnt,Long> {
 
     @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, attributePaths = "balance")
-    @Query("select b from AccountEnt acc join acc.balance b where acc.uuid= ?1 and acc.isDeleted=false and acc.isActive=true")
+    @Query("select b from AccountEnt acc join acc.balance b where acc.uuid= ?1 and acc.isDeleted=false and acc.status=1")
     Optional<BalanceEnt> findByAccountUuid(String uuid);
 }

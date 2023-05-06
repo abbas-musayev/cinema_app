@@ -24,7 +24,7 @@ public class BalanceEnt extends CoreEnt {
     @Enumerated(EnumType.STRING)
     Valute valute;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     AccountEnt account;
 
 }

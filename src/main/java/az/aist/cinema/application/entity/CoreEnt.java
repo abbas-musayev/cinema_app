@@ -1,12 +1,10 @@
 package az.aist.cinema.application.entity;
 
+import az.aist.cinema.application.config.StatusConverter;
 import az.aist.cinema.application.enums.Status;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 
@@ -22,9 +20,16 @@ public class CoreEnt {
     protected LocalDateTime updateDate;
 
     @Column(name = "status")
-    @Enumerated(EnumType.ORDINAL)
+    @Convert(converter = StatusConverter.class)
     protected Status status;
 
     @Column(name = "is_deleted")
     protected Boolean isDeleted;
+
+
+    @PrePersist
+    public void init(){
+        status= Status.ACTIVE;
+        isDeleted=false;
+    }
 }

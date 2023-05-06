@@ -1,6 +1,5 @@
 package az.aist.cinema.application.entity;
 
-import az.aist.cinema.application.enums.Status;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -38,13 +37,7 @@ public class CustomerEnt extends CoreEnt {
     @DateTimeFormat(pattern = "yyyy.MM.dd")
     LocalDate localDate;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_account")
-    AccountEnt accountEnt;
-
-    @PrePersist
-    public void init(){
-        status= Status.ACTIVE;
-        isDeleted=false;
-    }
+    AccountEnt account;
 }

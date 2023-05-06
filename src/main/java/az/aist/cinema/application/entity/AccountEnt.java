@@ -3,15 +3,14 @@ package az.aist.cinema.application.entity;
 import az.aist.cinema.application.enums.Status;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -28,12 +27,12 @@ public class AccountEnt extends CoreEnt{
     String username;
 
     @Column(name = "password")
-    Byte[] password;
+    String password;
 
     @ManyToMany(cascade = CascadeType.MERGE)
     private Set<AuthorityEnt> authorities;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     BalanceEnt balance;
 
     @Column(name = "uuid")

@@ -1,7 +1,9 @@
 package az.aist.cinema.application.auth;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -22,6 +24,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAuthSecurityConfigurerAdapter jwtAuthSecurityConfigurerAdapter;
     private final AuthenticationEntryPoint authenticationEntryPoint;
 
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 //        http.cors().disable();
@@ -33,7 +41,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(SWAGGER_UI).permitAll();
         http.authorizeRequests().antMatchers(SWAGGER_HTML).permitAll();
         http.authorizeRequests()
-                .antMatchers("/v1/customer/**").hasAnyAuthority("ADMIN", "USER", "MODERATOR")
                 .antMatchers(GET, "/v1/movie/**").hasAuthority("USER")
                 .antMatchers(POST, "/v1/movie").hasAnyAuthority("ADMIN", "MODERATOR")
                 .antMatchers(DELETE, "/v1/movie").hasAnyAuthority("ADMIN", "MODERATOR")

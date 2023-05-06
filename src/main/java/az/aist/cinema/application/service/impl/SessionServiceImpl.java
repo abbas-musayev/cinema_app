@@ -33,7 +33,7 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public MovieResponseDto edit(SessionRequestDto request, Long id) {
+    public SessionResponseDto edit(SessionRequestDto request, Long id) {
         return null;
     }
 

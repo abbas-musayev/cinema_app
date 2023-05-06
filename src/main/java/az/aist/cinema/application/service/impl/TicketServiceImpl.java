@@ -66,7 +66,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public MovieResponseDto edit(TicketRequestDto request, Long id) {
+    public TicketResponseDto edit(TicketRequestDto request, Long id) {
         return null;
     }
 

@@ -3,10 +3,13 @@ package az.aist.cinema.application.service.impl;
 import az.aist.cinema.application.dto.SearchCriteria;
 import az.aist.cinema.application.dto.SearchSpecification;
 import az.aist.cinema.application.dto.account.AccountRegisterRequestDto;
+import az.aist.cinema.application.dto.account.AccountResponseDto;
 import az.aist.cinema.application.dto.customer.CustomerRequestDto;
 import az.aist.cinema.application.dto.customer.CustomerResponseDto;
+import az.aist.cinema.application.entity.AccountEnt;
 import az.aist.cinema.application.entity.CustomerEnt;
 import az.aist.cinema.application.mapper.CustomerMapper;
+import az.aist.cinema.application.repository.AccountRepository;
 import az.aist.cinema.application.repository.CustomerRepository;
 import az.aist.cinema.application.service.AccountService;
 import az.aist.cinema.application.service.CustomerService;
@@ -22,15 +25,23 @@ import java.util.List;
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final AccountRepository accountRepository;
     private final CustomerMapper customerMapper;
     private final AccountService accountService;
 
     @Override
-    public void registerCustomer(CustomerRequestDto request) {
+    public CustomerResponseDto registerCustomer(CustomerRequestDto request) {
         CustomerEnt customerEnt = customerMapper.toEntity(request);
         AccountRegisterRequestDto account = request.getAccount();
-        accountService.createAccount(account);
-        customerRepository.save(customerEnt);
+        AccountResponseDto account1 = accountService.createAccount(account);
+        AccountEnt referenceById = accountRepository.getReferenceById(account1.getId());
+        customerEnt.setAccount(referenceById);
+        CustomerEnt saved = customerRepository.save(customerEnt);
+        CustomerResponseDto response = new CustomerResponseDto();
+        response.setResponseCode("000");
+        response.setResponseText("SUCCESS");
+        response.setId(saved.getId());
+        return response;
     }
 
     @Override

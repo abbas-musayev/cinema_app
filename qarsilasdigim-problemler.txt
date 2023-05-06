@@ -1,0 +1,9 @@
+@Builder annotatsiyasi extends edilmis A classının icerisindeki fieldleri gore bilmirdi
+@SuperBuilder istifadə etdikdə isə geriyə extends edilmiş A classının obyektini qaytarirdi
+
+
+uninitialized proxy passed to persist(); nested exception is org.hibernate.PersistentObjectException: uninitialized proxy passed to persist()_DETAIL
+Helli CustomerEnt de AccountEnt ucun cascadeType.MERGE  etmek
+
+detached entity passed to persist: az.aist.cinema.application.entity.AccountEnt; nested exception is org.hibernate
+Helli AccountEnt de BalanceEnt ucun cascaseType.MERGE etmek

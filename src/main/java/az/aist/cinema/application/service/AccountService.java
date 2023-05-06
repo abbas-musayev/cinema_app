@@ -1,12 +1,11 @@
 package az.aist.cinema.application.service;
 
-import az.aist.cinema.application.dto.account.AccountPaymentRequestDto;
-import az.aist.cinema.application.dto.account.AccountPaymentResponseDto;
 import az.aist.cinema.application.dto.account.AccountRegisterRequestDto;
+import az.aist.cinema.application.dto.account.AccountResponseDto;
 
 public interface AccountService {
 
-    void createAccount(AccountRegisterRequestDto accountRequestDto);
+    AccountResponseDto createAccount(AccountRegisterRequestDto accountRequestDto);
 
 //    AccountPaymentResponseDto increaseAccountBalance(AccountPaymentRequestDto reuqest);
 //    AccountPaymentResponseDto reductionAccountBalance(AccountPaymentRequestDto reuqest);

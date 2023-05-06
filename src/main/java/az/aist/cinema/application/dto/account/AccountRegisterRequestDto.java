@@ -3,6 +3,7 @@ package az.aist.cinema.application.dto.account;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+@ToString
 @Getter
 @Setter
 @AllArgsConstructor
@@ -10,5 +11,5 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AccountRegisterRequestDto {
     String username;
-    Byte[] password;
+    String password;
 }

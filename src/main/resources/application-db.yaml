@@ -22,3 +22,6 @@ spring:
     user: postgres
     password: mysecretpassword
     default-schema: cinema_app
+  sql:
+    init:
+      mode: always

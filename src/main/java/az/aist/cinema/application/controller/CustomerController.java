@@ -4,6 +4,7 @@ import az.aist.cinema.application.dto.SearchCriteria;
 import az.aist.cinema.application.dto.customer.CustomerRequestDto;
 import az.aist.cinema.application.dto.customer.CustomerResponseDto;
 import az.aist.cinema.application.service.CustomerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1/customer")
+@Slf4j
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -20,9 +22,9 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createCustomer(@RequestBody CustomerRequestDto dto){
-        customerService.registerCustomer(dto);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<CustomerResponseDto> createCustomer(@RequestBody CustomerRequestDto dto){
+        CustomerResponseDto customer = customerService.registerCustomer(dto);
+        return ResponseEntity.ok(customer);
     }
 
     @GetMapping

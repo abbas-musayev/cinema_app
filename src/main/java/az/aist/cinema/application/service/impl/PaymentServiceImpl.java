@@ -70,11 +70,11 @@ public class PaymentServiceImpl implements PaymentService {
         for (String ticket : ticketNumbers) {
             for (TicketEnt ticketEnt : tickets) {
                 if (!ticketEnt.getTicketNumber().equals(ticket)) {
-                    return PaymentResponseDto.builder()
-                            .responseCode("404")
-                            .responseText("Ticket not found, ticket number : " + ticket)
-                            .transactionNumber(request.getTransactionNumber())
-                            .build();
+                    PaymentResponseDto response = new PaymentResponseDto();
+                    response.setResponseCode("404");
+                    response.setResponseText("Ticket not found, ticket number : " + ticket);
+                    response.setTransactionNumber(request.getTransactionNumber());
+                    return response;
                 }
             }
         }
@@ -126,17 +126,17 @@ public class PaymentServiceImpl implements PaymentService {
                 paymentRepository.save(build);
             }
 
-            return PaymentResponseDto.builder()
-                    .responseCode("000")
-                    .responseText("SUCCESS")
-                    .transactionNumber(request.getTransactionNumber())
-                    .build();
+            PaymentResponseDto response = new PaymentResponseDto();
+            response.setResponseCode("000");
+            response.setResponseText("SUCCESS");
+            response.setTransactionNumber(request.getTransactionNumber());
+            return response;
         } else {
-            return PaymentResponseDto.builder()
-                    .responseCode("000")
-                    .responseText("insufficient amount")
-                    .transactionNumber(request.getTransactionNumber())
-                    .build();
+            PaymentResponseDto response = new PaymentResponseDto();
+            response.setResponseCode("-101");
+            response.setResponseText("insufficient amount");
+            response.setTransactionNumber(request.getTransactionNumber());
+            return response;
         }
     }
 
@@ -160,24 +160,25 @@ public class PaymentServiceImpl implements PaymentService {
 
         // account balansi ticketlerin mebleginnen az olub olmamasi yoxlanilir
         if (balance.getBalance().compareTo(sumOfTicketAmount) < 0) {
-            return PaymentResponseDto.builder()
-                    .responseCode("100")
-                    .responseText("Insufficient amount in balance")
-                    .transactionNumber(request.getTransactionNumber())
-                    .build();
+            PaymentResponseDto response = new PaymentResponseDto();
+            response.setResponseCode("-101");
+            response.setResponseText("Insufficient amount in balance");
+            response.setTransactionNumber(response.getTransactionNumber());
+            return response;
         }
         // balansdan mebleg cixilir
-        BalanceResponseDto response = balanceService.reduceBalance(BalanceChangeRequestDto.builder()
+        BalanceResponseDto balanceResponse = balanceService.reduceBalance(BalanceChangeRequestDto.builder()
                 .accountUuid(accountUuid)
                 .amount(sumOfTicketAmount)
                 .transactionNumber(request.getTransactionNumber())
                 .build());
 
-        return PaymentResponseDto.builder()
-                .responseCode(response.getResponseCode())
-                .responseText(response.getResponseText())
-                .transactionNumber(request.getTransactionNumber())
-                .build();
+        PaymentResponseDto response = new PaymentResponseDto();
+        response.setResponseCode(balanceResponse.getResponseCode());
+        response.setResponseText(balanceResponse.getResponseText());
+        response.setTransactionNumber(request.getTransactionNumber());
+        return response;
+
     }
 
     @Transactional
@@ -196,11 +197,11 @@ public class PaymentServiceImpl implements PaymentService {
 
         for (TicketEnt ticket : tickets) {
             if (ticketService.ticketCheckTicketDateIsExpired(ticket.getTicketNumber())) {
-                return PaymentResponseDto.builder()
-                        .responseCode("400")
-                        .responseText("Ticket expired")
-                        .transactionNumber(request.getTransactionNumber())
-                        .build();
+                PaymentResponseDto response = new PaymentResponseDto();
+                response.setResponseCode("-105");
+                response.setResponseText("Ticket date expired");
+                response.setTransactionNumber(request.getTransactionNumber());
+                return response;
             }
         }
 
@@ -212,13 +213,13 @@ public class PaymentServiceImpl implements PaymentService {
                 .transactionNumber(request.getTransactionNumber())
                 .build();
 
-        BalanceResponseDto response = balanceService.increaseBalance(dto);
+        BalanceResponseDto balanceResponse = balanceService.increaseBalance(dto);
 
-        return PaymentResponseDto.builder()
-                .responseCode(response.getResponseCode())
-                .responseText(response.getResponseText())
-                .transactionNumber(request.getTransactionNumber())
-                .build();
+        PaymentResponseDto response = new PaymentResponseDto();
+        response.setResponseCode(balanceResponse.getResponseCode());
+        response.setResponseText(balanceResponse.getResponseText());
+        response.setTransactionNumber(request.getTransactionNumber());
+        return response;
     }
 
 

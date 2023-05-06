@@ -4,6 +4,9 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  messages:
+    basename: lang/messages
+    encoding: UTF-8
 security:
   secret:
     jwtExpirationMs: 300000

@@ -23,7 +23,7 @@ public class HallServiceImpl implements HallService {
     }
 
     @Override
-    public MovieResponseDto edit(HallRequestDto request, Long id) {
+    public HallResponseDto edit(HallRequestDto request, Long id) {
         return null;
     }
 

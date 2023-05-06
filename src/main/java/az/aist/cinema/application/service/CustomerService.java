@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CustomerService {
 
-    void registerCustomer(CustomerRequestDto request);
+    CustomerResponseDto registerCustomer(CustomerRequestDto request);
     List<CustomerResponseDto> getAllCustomers();
     List<CustomerResponseDto> searchCustomers(List<SearchCriteria> request);
 

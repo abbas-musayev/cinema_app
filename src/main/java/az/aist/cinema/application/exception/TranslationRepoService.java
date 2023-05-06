@@ -18,7 +18,7 @@ public class TranslationRepoService {
         try {
             return messageSource.getMessage(key,arguments,new Locale(lang));
         }catch (Exception ex){
-            ex.printStackTrace();
+//            ex.printStackTrace();
             return key;
         }
     }

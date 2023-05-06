@@ -9,7 +9,7 @@ import java.util.Set;
 public interface GenericCrudService<R,E,T> {
     void create(R request);
     void delete(Long id);
-    MovieResponseDto edit(R request, Long id);
+    T edit(R request, Long id);
     List<T> getAll();
     List<T> search(List<SearchCriteria> request);
 }

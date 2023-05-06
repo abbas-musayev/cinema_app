@@ -1,4 +1,13 @@
 package az.aist.cinema.application.dto.customer;
 
-public class CustomerResponseDto {
+import az.aist.cinema.application.dto.CoreResponseDto;
+import lombok.*;
+
+@ToString
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class CustomerResponseDto extends CoreResponseDto {
+    private Long id;
 }

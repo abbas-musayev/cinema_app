@@ -1,14 +1,10 @@
 package az.aist.cinema.application.dto.payment;
 
+import az.aist.cinema.application.dto.CoreResponseDto;
 import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class PaymentResponseDto {
-    private String responseText;
-    private String responseCode;
-    private String transactionNumber;
+public class PaymentResponseDto extends CoreResponseDto {
 }

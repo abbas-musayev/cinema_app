@@ -1,14 +1,14 @@
 package az.aist.cinema.application.dto.balance;
 
+import az.aist.cinema.application.dto.CoreResponseDto;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
+@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class BalanceResponseDto {
-    private String responseText;
-    private String responseCode;
-    private String transactionNumber;
+public class BalanceResponseDto extends CoreResponseDto {
+    private Long id;
 }
